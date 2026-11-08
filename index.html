@@ -2,271 +2,99 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f8e9e9">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fffaf6">
 <link rel="manifest" href="manifest.webmanifest">
 <title>amaTi</title>
 <style>
-:root{--blush:#f8e9e9;--blush2:#f3dada;--rose:#bd777f;--deep:#92565e;--cream:#fffaf2;--white:#fff;--ink:#76545a;--lilac:#eee8f8}
-*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:ui-rounded,"Avenir Next",Avenir,system-ui,sans-serif}
-button{font:inherit;color:inherit;border:0;cursor:pointer}
-.app{max-width:520px;min-height:100vh;margin:auto;padding:22px 18px 100px;background:linear-gradient(180deg,#fff8f5 0%,#fffdf9 50%)}
-header{display:flex;align-items:center;justify-content:space-between;margin:6px 2px 18px}
-.brand{font-family:Georgia,serif;font-size:35px;letter-spacing:-1.5px;color:var(--deep)}
-.brand span{font-style:italic;color:var(--rose)}
-.date-label{font-size:12px;color:#a77b7e}
-h1{font-size:22px;font-weight:600;margin:0 0 4px;color:var(--deep)}
-.sub{font-size:13px;color:#a77b7e;margin:0 0 17px}
-.calendar-card,.cycle-card,.mini-card{background:var(--white);border:1px solid #f4e5e1;border-radius:23px;box-shadow:0 5px 18px #b97d7710}
-.calendar-card{padding:17px 15px 15px}.full-calendar-card{padding:20px 15px 18px}.full-days{grid-auto-rows:clamp(42px,9vw,54px)!important}.full-days .day{height:clamp(42px,9vw,54px);font-size:15px}.full-calendar-card .week span{font-size:12px}.open-calendar{display:flex;align-items:center;justify-content:space-between;width:100%;background:var(--blush);border-radius:15px;padding:12px 14px;margin-top:12px;color:var(--deep);font-size:13px}.open-calendar span:last-child{font-size:19px}
-.month-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
-.month-title{font-family:Georgia,serif;font-size:20px;color:var(--deep)}
-.arrow{background:var(--cream);width:34px;height:34px;border-radius:50%;font-size:20px;color:var(--rose)}
-.week,.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;text-align:center}.days{grid-auto-rows:40px;grid-auto-flow:row;align-items:center;min-height:40px;overflow:visible}
-.week{margin-bottom:8px}.week span{font-size:11px;color:#b28c8d;padding:5px 0}
-.day{height:40px;border-radius:50%;background:transparent;font-size:13px;position:relative}
-.day.today{background:var(--blush2);color:#fff;font-weight:700}
-.day.period{background:var(--rose);color:#fff;font-weight:650}
-.day.fertile{background:var(--lilac);color:#8977a6}
-.day.selected{outline:2px solid #d7a2a5;outline-offset:2px}
-.legend{display:flex;flex-wrap:wrap;gap:12px;margin:15px 2px 0;font-size:10px;color:#a77b7e}
-.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;background:var(--blush2)}
-.dot.period{background:var(--rose)}.dot.fertile{background:#d8cbea}
-.actions{display:flex;justify-content:flex-end;margin-top:12px}
-.small-btn{background:var(--blush);padding:9px 14px;border-radius:16px;font-size:12px;color:var(--deep)}
-.cycle-card{margin-top:13px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.cycle-card strong{display:block;font-family:Georgia,serif;font-size:17px;color:var(--deep);font-weight:500}
-.cycle-card small{font-size:11px;color:#b28c8d}
-.cycle-number{font-family:Georgia,serif;font-size:27px;color:var(--rose);white-space:nowrap}
-.section-label{font-family:Georgia,serif;font-size:17px;color:var(--deep);margin:20px 2px 9px}
-.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.mini-card{padding:14px 13px;min-height:92px;text-align:left}
-.mini-card .flower{font-size:17px;color:var(--rose);display:block;margin-bottom:5px}
-.mini-card strong{font-size:13px;font-weight:600;display:block}
-.mini-card small{font-size:10px;color:#b28c8d;display:block;margin-top:4px;line-height:1.35}
-.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);height:72px;padding:8px 10px max(8px,env(safe-area-inset-bottom));background:#fffaf7ed;backdrop-filter:blur(12px);border-top:1px solid #f3e4df;display:flex;justify-content:space-around}
-.nav{background:none;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:9px;color:#bd9696;min-width:52px}
-.nav .ico{font-size:19px;line-height:22px}.nav.active{color:var(--deep)}
-.screen{display:none}.screen.active{display:block}
-.back{background:var(--blush);border-radius:50%;width:34px;height:34px;font-size:20px;margin:0 0 14px}
-.day-panel,.info-panel{background:#fff;border:1px solid #f4e5e1;border-radius:22px;padding:18px;margin-top:12px}
-.placeholder{font-size:13px;line-height:1.6;color:#98777a}
-.toast{font-size:11px;color:#a77b7e;margin-top:8px}
-@media(min-width:520px){.app{border-left:1px solid #f5e9e5;border-right:1px solid #f5e9e5}}
-
-/* Scheda giornaliera */
-.form-section{margin:17px 0 0}
-.form-section h2{font-size:16px;color:var(--deep);margin:0 0 9px;font-weight:650}
-.form-section .hint{font-size:11px;color:#b28c8d;margin:-3px 0 9px}
-.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.choice{display:flex;align-items:center;gap:8px;background:#fffaf2;border:1px solid #f1dfdc;border-radius:14px;padding:10px 11px;font-size:13px;min-height:43px}
-.choice input{accent-color:#bd777f;width:17px;height:17px;flex:none}
-.choice:has(input:checked){background:#f8e9e9;border-color:#d8a6a8}
-.intensity-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
-.intensity-row label{font-size:10px;background:#fffaf2;border:1px solid #f1dfdc;border-radius:20px;padding:7px 9px}
-.intensity-row input{accent-color:#bd777f}
-.symptom-item{padding:9px 0;border-bottom:1px solid #f6eae7}
-.symptom-top{display:flex;align-items:center;gap:8px}
-.symptom-top label{font-size:13px;display:flex;align-items:center;gap:8px}
-.symptom-top input{accent-color:#bd777f;width:17px;height:17px}
-.field-select{width:100%;background:#fffaf2;border:1px solid #f1dfdc;border-radius:13px;padding:11px;color:var(--ink);font:inherit;font-size:13px;margin-top:8px}
-.notes{width:100%;min-height:105px;resize:vertical;background:#fffaf2;border:1px solid #f1dfdc;border-radius:15px;padding:12px;color:var(--ink);font:inherit;font-size:13px}
-.save-day{width:100%;margin-top:17px;background:#f3dada;border-radius:16px;padding:13px;color:var(--deep);font-weight:650}
-.saved-message{font-size:11px;color:#9a6a70;text-align:center;min-height:17px;margin-top:8px}
-.flow-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.flow-choice{display:flex;flex-direction:column;align-items:center;gap:5px;background:#fffaf2;border:1px solid #f1dfdc;border-radius:14px;padding:12px 4px;font-size:12px}
-.flow-choice input{accent-color:#bd777f}
-.flow-symbol{font-size:23px;color:#bd777f;line-height:1}
-
+:root{--bg:#fffaf6;--paper:#fff;--rose:#925f64;--muted:#ad8585;--pale:#f4e3e2;--paler:#fbf1ee;--line:#f1e2de;--cream:#fffaf1;--lilac:#ded2ed}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--rose);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,textarea{font:inherit}button{cursor:pointer;color:inherit}
+header{padding:28px 22px 8px;display:flex;justify-content:space-between;align-items:center} .brand{font: bold 42px Georgia,serif;letter-spacing:-2px}.date{font-size:14px;color:var(--muted)}
+main{padding:12px 20px 110px;max-width:720px;margin:auto}.heading{font-size:25px;margin:12px 0 5px;font-weight:750}.sub{color:var(--muted);margin:0 0 22px;font-size:16px}
+.panel{background:var(--paper);border:1.5px solid var(--line);border-radius:27px;padding:20px;margin:14px 0;box-shadow:0 3px 15px #a36f6610}
+h2{font-size:20px;margin:0 0 15px}.hint{color:var(--muted);font-size:14px;line-height:1.5}
+button.primary{background:var(--pale);border:0;border-radius:24px;padding:14px 18px;font-weight:650}
+button.soft{background:var(--cream);border:1px solid var(--line);border-radius:18px;padding:10px 14px}
+nav{position:fixed;bottom:0;left:0;right:0;background:#fffaf6f5;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:10px 4px calc(10px + env(safe-area-inset-bottom));z-index:5}
+nav button{border:0;background:none;color:#b99595;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:4px}nav .ico{font-size:22px}nav button.active{color:var(--rose);font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.choice{border:1px solid var(--line);background:var(--cream);border-radius:17px;padding:12px 8px;text-align:center;min-height:48px}
+.choice.selected{background:var(--pale);border:2px solid #c88f91}
+.choice small{display:block;color:var(--muted);font-size:11px;margin-top:4px}
+.group{margin:20px 0}.group h3{font-size:17px;margin:0 0 10px}
+.intensity{display:flex;flex-wrap:wrap;gap:6px}.intensity .choice{flex:1;min-width:90px;font-size:12px;padding:10px 5px}
+textarea{width:100%;min-height:120px;border:1px solid var(--line);border-radius:17px;padding:14px;background:#fffdfa;color:var(--rose);resize:vertical}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px}.saved{font-size:12px;color:#8b9b78}
+.calendar-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;text-align:center}.day{padding:11px 0;border-radius:50%;font-size:14px}.today{background:var(--pale);font-weight:700}.period{background:#b77e84;color:white}.dow{font-size:11px;color:var(--muted);padding:8px 0}
+.hidden{display:none!important}
 </style>
 </head>
 <body>
-<div class="app">
-  <section id="home" class="screen active">
-    <header><div class="brand">ama<span>Ti</span></div><div class="date-label" id="todayLabel"></div></header>
-    <h1>Il tuo calendario</h1><p class="sub">Un piccolo spazio tutto tuo.</p>
-    <div class="calendar-card">
-      <div class="month-row"><button class="arrow" id="prev" aria-label="Mese precedente">‹</button><div class="month-title" id="monthTitle"></div><button class="arrow" id="next" aria-label="Mese successivo">›</button></div>
-      <div class="week"><span>LUN</span><span>MAR</span><span>MER</span><span>GIO</span><span>VEN</span><span>SAB</span><span>DOM</span></div>
-      <div class="days" id="days"></div>
-      <div class="legend"><span><i class="dot"></i>Oggi</span><span><i class="dot period"></i>Mestruazioni</span><span><i class="dot fertile"></i>Finestra fertile stimata</span></div>
-      <div class="actions"><button class="small-btn" id="recordPeriod">＋ Registra mestruazioni</button></div><button class="open-calendar" id="openFullCalendar"><span>Apri calendario completo</span><span>↗</span></button>
-      <div class="toast" id="calendarHint">Tocca un giorno per aprire la sua scheda.</div>
-    </div>
-    <div class="cycle-card"><div><strong>Il tuo prossimo ciclo</strong><small>La previsione apparirà quando registrerai i cicli.</small></div><div class="cycle-number">—</div></div>
-    <div class="section-label">Piccoli spazi per te</div>
-    <div class="mini-grid">
-      <button class="mini-card" data-open="learn"><span class="flower">✿</span><strong>Imparo a conoscermi</strong><small>Scopri il tuo corpo, con calma.</small></button>
-      <button class="mini-card" data-open="facts"><span class="flower">✧</span><strong>Lo sapevi?</strong><small>Piccole curiosità sul ciclo.</small></button>
-    </div>
-  </section>
-
-  <section id="fullcalendar" class="screen">
-    <button class="back" data-back aria-label="Indietro">‹</button>
-    <h1>Il tuo calendario</h1><p class="sub">Tutto il mese, a colpo d'occhio.</p>
-    <div class="calendar-card full-calendar-card">
-      <div class="month-row"><button class="arrow" id="fullPrev" aria-label="Mese precedente">‹</button><div class="month-title" id="fullMonthTitle"></div><button class="arrow" id="fullNext" aria-label="Mese successivo">›</button></div>
-      <div class="week"><span>LUN</span><span>MAR</span><span>MER</span><span>GIO</span><span>VEN</span><span>SAB</span><span>DOM</span></div>
-      <div class="days full-days" id="fullDays"></div>
-      <div class="legend"><span><i class="dot"></i>Oggi</span><span><i class="dot period"></i>Mestruazioni</span><span><i class="dot fertile"></i>Finestra fertile stimata</span></div>
-      <div class="actions"><button class="small-btn" id="fullRecordPeriod">＋ Registra mestruazioni</button></div>
-    </div>
-  </section>
-
-  <section id="day" class="screen">
-    <button class="back" data-back aria-label="Indietro">‹</button>
-    <h1 id="dayTitle">La tua giornata</h1><p class="sub">La tua scheda giornaliera</p>
-    
-<div class="day-panel">
-  <form id="dailyForm">
-    <div class="form-section">
-      <h2>Come ti senti oggi, Virgi?</h2>
-      <p class="hint">Puoi scegliere più emozioni.</p>
-      <div class="choice-grid" id="moodChoices">
-        <label class="choice"><input type="checkbox" name="mood" value="Felice"> ☀️ Felice</label>
-        <label class="choice"><input type="checkbox" name="mood" value="Neutrale"> ♡ Neutrale</label>
-        <label class="choice"><input type="checkbox" name="mood" value="Sensibile"> 🌷 Sensibile</label>
-        <label class="choice"><input type="checkbox" name="mood" value="Stanca"> ☁️ Stanca</label>
-        <label class="choice"><input type="checkbox" name="mood" value="Tranquilla"> 🌿 Tranquilla</label>
-        <label class="choice"><input type="checkbox" name="mood" value="Arrabbiata"> ⚡ Arrabbiata</label>
-        <label class="choice"><input type="checkbox" name="mood" value="Stressata"> 💭 Stressata</label>
-        <label class="choice"><input type="checkbox" name="mood" value="Ansiosa"> 🫧 Ansiosa</label>
-      </div>
-    </div>
-    <div class="form-section">
-      <h2>Hai notato qualche sintomo?</h2>
-      <p class="hint">Seleziona quelli presenti e indica l'intensità di ciascuno.</p>
-      <div id="symptomChoices">
-        <div class="symptom-item"><div class="symptom-top"><label><input type="checkbox" name="symptom" value="Crampi"> Crampi</label></div><select class="field-select symptom-intensity" data-symptom="Crampi"><option value="">Scegli l'intensità</option><option>Molto lieve</option><option>Lieve</option><option>Medio</option><option>Forte</option><option>Molto forte</option></select></div>
-        <div class="symptom-item"><div class="symptom-top"><label><input type="checkbox" name="symptom" value="Mal di testa"> Mal di testa</label></div><select class="field-select symptom-intensity" data-symptom="Mal di testa"><option value="">Scegli l'intensità</option><option>Molto lieve</option><option>Lieve</option><option>Medio</option><option>Forte</option><option>Molto forte</option></select></div>
-        <div class="symptom-item"><div class="symptom-top"><label><input type="checkbox" name="symptom" value="Gonfiore"> Gonfiore</label></div><select class="field-select symptom-intensity" data-symptom="Gonfiore"><option value="">Scegli l'intensità</option><option>Molto lieve</option><option>Lieve</option><option>Medio</option><option>Forte</option><option>Molto forte</option></select></div>
-        <div class="symptom-item"><div class="symptom-top"><label><input type="checkbox" name="symptom" value="Stanchezza"> Stanchezza</label></div><select class="field-select symptom-intensity" data-symptom="Stanchezza"><option value="">Scegli l'intensità</option><option>Molto lieve</option><option>Lieve</option><option>Medio</option><option>Forte</option><option>Molto forte</option></select></div>
-        <div class="symptom-item"><div class="symptom-top"><label><input type="checkbox" name="symptom" value="Brufoli"> Brufoli</label></div><select class="field-select symptom-intensity" data-symptom="Brufoli"><option value="">Scegli l'intensità</option><option>Molto lieve</option><option>Lieve</option><option>Medio</option><option>Forte</option><option>Molto forte</option></select></div>
-        <div class="symptom-item"><div class="symptom-top"><label><input type="checkbox" name="symptom" value="Mal di schiena"> Mal di schiena</label></div><select class="field-select symptom-intensity" data-symptom="Mal di schiena"><option value="">Scegli l'intensità</option><option>Molto lieve</option><option>Lieve</option><option>Medio</option><option>Forte</option><option>Molto forte</option></select></div>
-        <div class="symptom-item"><div class="symptom-top"><label><input type="checkbox" name="symptom" value="Nausea"> Nausea</label></div><select class="field-select symptom-intensity" data-symptom="Nausea"><option value="">Scegli l'intensità</option><option>Molto lieve</option><option>Lieve</option><option>Medio</option><option>Forte</option><option>Molto forte</option></select></div>
-        <div class="symptom-item"><div class="symptom-top"><label><input type="checkbox" name="symptom" value="Sensibilità al seno"> Sensibilità al seno</label></div><select class="field-select symptom-intensity" data-symptom="Sensibilità al seno"><option value="">Scegli l'intensità</option><option>Molto lieve</option><option>Lieve</option><option>Medio</option><option>Forte</option><option>Molto forte</option></select></div>
-      </div>
-    </div>
-    <div class="form-section">
-      <h2>Dolore generale</h2>
-      <select class="field-select" id="generalPain"><option value="">Seleziona l'intensità (facoltativo)</option><option>Molto lieve</option><option>Lieve</option><option>Medio</option><option>Forte</option><option>Molto forte</option></select>
-    </div>
-    <div class="form-section">
-      <h2>Com'è il flusso?</h2>
-      <div class="flow-grid">
-        <label class="flow-choice"><span class="flow-symbol">♡</span><input type="radio" name="flow" value="Leggero">Leggero</label>
-        <label class="flow-choice"><span class="flow-symbol">♥</span><input type="radio" name="flow" value="Medio">Medio</label>
-        <label class="flow-choice"><span class="flow-symbol">✿</span><input type="radio" name="flow" value="Abbondante">Abbondante</label>
-      </div>
-    </div>
-    <div class="form-section">
-      <h2>La mia energia oggi</h2>
-      <select class="field-select" id="energy"><option value="">Scegli come ti senti</option><option>Molto bassa</option><option>Bassa</option><option>Normale</option><option>Alta</option><option>Molto alta</option></select>
-    </div>
-    <div class="form-section">
-      <h2>Le mie note</h2>
-      <textarea class="notes" id="notes" placeholder=""></textarea>
-    </div>
-    <button class="save-day" type="submit">Salva la giornata</button>
-    <div class="saved-message" id="savedMessage" aria-live="polite"></div>
-  </form>
+<header><div class="brand">amaTi</div><div class="date" id="todayLabel"></div></header>
+<main>
+<section id="home">
+<h1 class="heading">Il tuo spazio, Virgi</h1><p class="sub">Un piccolo spazio tutto tuo.</p>
+<div class="panel">
+<div class="calendar-head"><button class="soft" id="prev">‹</button><h2 id="monthTitle"></h2><button class="soft" id="next">›</button></div>
+<div class="days" id="calendar"></div>
+<p class="hint">Tocca un giorno per aprire la sua scheda.</p>
 </div>
-
-  </section>
-  <section id="learn" class="screen">
-    <button class="back" data-back aria-label="Indietro">‹</button><h1>Imparo a conoscermi</h1><p class="sub">Informazioni semplici per conoscere meglio il ciclo.</p>
-    <div class="info-panel"><strong>Le fasi del ciclo</strong><p class="placeholder">Il ciclo comprende diverse fasi e può variare da persona a persona. In adolescenza è normale che non sia sempre regolare.</p></div>
-  </section>
-  <section id="facts" class="screen">
-    <button class="back" data-back aria-label="Indietro">‹</button><h1>Lo sapevi?</h1><p class="sub">Una piccola curiosità alla volta.</p>
-    <div class="info-panel"><strong>Ogni ciclo può essere diverso</strong><p class="placeholder">Durata, flusso e sintomi possono cambiare da un mese all'altro. Le previsioni sono solo stime.</p></div>
-  </section>
-  <section id="other" class="screen">
-    <button class="back" data-back aria-label="Indietro">‹</button><h1 id="otherTitle"></h1><div class="info-panel"><p class="placeholder">Questa sezione sarà realizzata nel prossimo passaggio.</p></div>
-  </section>
+<div class="panel row"><div><b>La tua scheda di oggi</b><div class="hint">Puoi aggiornarla quando vuoi.</div></div><button class="primary" id="todayBtn">Registra oggi</button></div>
+</section>
+<section id="daily" class="hidden">
+<button class="soft" id="back">‹ Indietro</button>
+<h1 class="heading" id="dayTitle"></h1><p class="sub">La tua scheda giornaliera</p>
+<div class="panel">
+<div class="row"><h2>Come ti senti oggi, Virgi?</h2><span class="saved" id="saveState"></span></div>
+<div class="group"><h3>Emozioni</h3><div class="grid" id="moods"></div></div>
+<div class="group"><h3>Sintomi</h3><div class="grid" id="symptoms"></div><p class="hint">Seleziona un sintomo per indicarne l'intensità.</p><div id="symptomLevels"></div></div>
+<div class="group"><h3>Intensità generale del dolore</h3><div class="intensity" id="pain"></div></div>
+<div class="group"><h3>Flusso mestruale</h3><div class="grid" id="flow"></div></div>
+<div class="group"><h3>La mia energia oggi</h3><div class="intensity" id="energy"></div></div>
+<div class="group"><h3>Note personali</h3><textarea id="notes" placeholder="Scrivi qui quello che vuoi..."></textarea></div>
+<button class="primary" id="saveBtn" style="width:100%">Salva la scheda</button>
+<p class="hint">Le risposte vengono salvate su questo dispositivo. Se cancelli i dati di Safari o cambi dispositivo, potresti perderle: in futuro aggiungeremo anche l'esportazione.</p>
 </div>
-<nav class="bottom" aria-label="Navigazione principale">
-  <button class="nav active" data-tab="home"><span class="ico">⌂</span>Home</button>
-  <button class="nav" data-tab="other" data-name="Calendario"><span class="ico">▦</span>Calendario</button>
-  <button class="nav" data-tab="other" data-name="Diario"><span class="ico">♡</span>Diario</button>
-  <button class="nav" data-tab="other" data-name="Statistiche"><span class="ico">▥</span>Statistiche</button>
-  <button class="nav" data-tab="other" data-name="Profilo"><span class="ico">○</span>Profilo</button>
+</section>
+<section id="other" class="hidden"><h1 class="heading" id="otherTitle"></h1><div class="panel">Questa sezione verrà completata nei prossimi passaggi. 💗</div></section>
+</main>
+<nav>
+<button data-tab="home" class="active"><span class="ico">⌂</span>Home</button>
+<button data-tab="home"><span class="ico">▦</span>Calendario</button>
+<button data-tab="other" data-title="Diario"><span class="ico">♡</span>Diario</button>
+<button data-tab="other" data-title="Statistiche"><span class="ico">▥</span>Statistiche</button>
+<button data-tab="other" data-title="Profilo"><span class="ico">○</span>Profilo</button>
 </nav>
 <script>
-const now=new Date();let view=new Date(now.getFullYear(),now.getMonth(),1);let selected=null;
-const monthNames=['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
-const fmt=d=>new Intl.DateTimeFormat('it-IT',{day:'numeric',month:'long',year:'numeric'}).format(d);
-document.getElementById('todayLabel').textContent=new Intl.DateTimeFormat('it-IT',{weekday:'long',day:'numeric',month:'long'}).format(now);
-function drawCalendar(targetId,titleId,date){
- document.getElementById(titleId).textContent=monthNames[date.getMonth()]+' '+date.getFullYear();
- const first=new Date(date.getFullYear(),date.getMonth(),1), offset=(first.getDay()+6)%7, count=new Date(date.getFullYear(),date.getMonth()+1,0).getDate();
- const box=document.getElementById(targetId);box.innerHTML='';
- const rows=Math.ceil((offset+count)/7);
- box.style.gridTemplateRows=`repeat(${rows}, ${targetId==='fullDays'?'clamp(42px,9vw,54px)':'40px'})`;
- for(let i=0;i<offset;i++){let blank=document.createElement('span');box.appendChild(blank)}
- for(let n=1;n<=count;n++){
-   const d=new Date(date.getFullYear(),date.getMonth(),n),b=document.createElement('button');
-   b.className='day';b.type='button';b.textContent=n;
-   if(d.toDateString()===now.toDateString())b.classList.add('today');
-   if(selected&&d.toDateString()===selected.toDateString())b.classList.add('selected');
-   b.addEventListener('click',()=>{selected=d;document.getElementById('dayTitle').textContent=fmt(d);show('day')});
-   box.appendChild(b);
- }
+const $=id=>document.getElementById(id);
+const now=new Date(); let shown=new Date(now.getFullYear(),now.getMonth(),1);let selectedDate=iso(now);
+const moods=['Felice','Neutrale','Sensibile','Stanca','Tranquilla','Arrabbiata','Stressata','Ansiosa'];
+const symptoms=['Crampi','Mal di testa','Gonfiore','Stanchezza','Brufoli','Mal di schiena','Nausea','Sensibilità al seno'];
+const levels=['Molto lieve','Lieve','Medio','Forte','Molto forte'];
+const storeKey='amati-daily-v1';
+let records=JSON.parse(localStorage.getItem(storeKey)||'{}');
+function iso(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function labelDate(s){return new Date(s+'T12:00:00').toLocaleDateString('it-IT',{day:'numeric',month:'long',year:'numeric'})}
+$('todayLabel').textContent=now.toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long'});
+function drawCalendar(){
+ $('monthTitle').textContent=shown.toLocaleDateString('it-IT',{month:'long',year:'numeric'});
+ const first=new Date(shown.getFullYear(),shown.getMonth(),1), offset=(first.getDay()+6)%7, count=new Date(shown.getFullYear(),shown.getMonth()+1,0).getDate();
+ $('calendar').innerHTML=['LUN','MAR','MER','GIO','VEN','SAB','DOM'].map(x=>`<div class="dow">${x}</div>`).join('');
+ for(let i=0;i<offset;i++)$('calendar').insertAdjacentHTML('beforeend','<div></div>');
+ for(let d=1;d<=count;d++){let date=new Date(shown.getFullYear(),shown.getMonth(),d),key=iso(date),cls=key===iso(now)?'today':'';if(records[key]?.flow)cls+=' period';$('calendar').insertAdjacentHTML('beforeend',`<button class="day ${cls}" data-date="${key}">${d}</button>`)}
+ document.querySelectorAll('[data-date]').forEach(b=>b.onclick=()=>openDay(b.dataset.date));
 }
-function render(){drawCalendar('days','monthTitle',view);drawCalendar('fullDays','fullMonthTitle',view)}
-function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('active',n.dataset.tab===id));}
-document.getElementById('prev').onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()-1,1);render()};
-document.getElementById('next').onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()+1,1);render()};
-document.getElementById('fullPrev').onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()-1,1);render()};
-document.getElementById('fullNext').onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()+1,1);render()};
-document.getElementById('openFullCalendar').onclick=()=>show('fullcalendar');
-document.getElementById('recordPeriod').onclick=()=>{document.getElementById('calendarHint').textContent='La selezione dei giorni mestruali sarà attivata nella sezione Calendario.'};
-document.getElementById('fullRecordPeriod').onclick=()=>{document.getElementById('calendarHint').textContent='La selezione dei giorni mestruali sarà attivata nella sezione Calendario.';show('home')};
-document.querySelectorAll('[data-back]').forEach(b=>b.onclick=()=>show('home'));
-document.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>show(b.dataset.open));
-document.querySelectorAll('.nav').forEach(b=>b.onclick=()=>{if(b.dataset.tab==='other'){document.getElementById('otherTitle').textContent=b.dataset.name;show('other')}else show('home')});
-
-const form=document.getElementById('dailyForm');
-const dayKey=()=>selected?`amati-day-${selected.getFullYear()}-${String(selected.getMonth()+1).padStart(2,'0')}-${String(selected.getDate()).padStart(2,'0')}`:null;
-function loadDay(){
-  form.reset();
-  const key=dayKey(), saved=key?localStorage.getItem(key):null;
-  document.getElementById('savedMessage').textContent='';
-  if(!saved)return;
-  try{
-    const data=JSON.parse(saved);
-    document.querySelectorAll('input[name="mood"]').forEach(el=>el.checked=(data.mood||[]).includes(el.value));
-    document.querySelectorAll('input[name="symptom"]').forEach(el=>el.checked=Object.prototype.hasOwnProperty.call(data.symptoms||{},el.value));
-    document.querySelectorAll('.symptom-intensity').forEach(el=>el.value=(data.symptoms||{})[el.dataset.symptom]||'');
-    document.getElementById('generalPain').value=data.generalPain||'';
-    document.querySelectorAll('input[name="flow"]').forEach(el=>el.checked=el.value===data.flow);
-    document.getElementById('energy').value=data.energy||'';
-    document.getElementById('notes').value=data.notes||'';
-  }catch(e){}
-}
-form.addEventListener('submit',e=>{
-  e.preventDefault();
-  const mood=[...document.querySelectorAll('input[name="mood"]:checked')].map(el=>el.value);
-  const symptoms={};
-  document.querySelectorAll('input[name="symptom"]:checked').forEach(el=>{
-    const intensity=document.querySelector(`.symptom-intensity[data-symptom="${el.value}"]`);
-    symptoms[el.value]=intensity?intensity.value:'';
-  });
-  const data={
-    mood,symptoms,
-    generalPain:document.getElementById('generalPain').value,
-    flow:document.querySelector('input[name="flow"]:checked')?.value||'',
-    energy:document.getElementById('energy').value,
-    notes:document.getElementById('notes').value
-  };
-  if(!selected)return;
-  localStorage.setItem(dayKey(),JSON.stringify(data));
-  document.getElementById('savedMessage').textContent='Giornata salvata su questo dispositivo ♡';
-});
-const originalShow=show;
-show=function(id){originalShow(id);if(id==='day')loadDay()};
-
-render();
-if('serviceWorker' in navigator && location.protocol!=='file:'){navigator.serviceWorker.register('./service-worker.js').catch(()=>{})}
+$('prev').onclick=()=>{shown.setMonth(shown.getMonth()-1);drawCalendar()};$('next').onclick=()=>{shown.setMonth(shown.getMonth()+1);drawCalendar()};
+function choices(id,items,multiple=true,values=[]){$(id).innerHTML=items.map(v=>`<button type="button" class="choice ${values.includes(v)?'selected':''}" data-value="${v}">${v}</button>`).join('');$(id).querySelectorAll('button').forEach(b=>b.onclick=()=>{let v=b.dataset.value;if(multiple){let a=values.includes(v)?values.filter(x=>x!==v):[...values,v];choices(id,items,multiple,a);if(id==='symptoms')drawSymptomLevels(a)}else{choices(id,items,false,[v]);if(id==='pain')form.pain=v;if(id==='flow')form.flow=v;if(id==='energy')form.energy=v}})}
+let form={moods:[],symptoms:[],symptomLevels:{},pain:'',flow:'',energy:'',notes:''};
+function drawSymptomLevels(selected){$('symptomLevels').innerHTML=selected.map(s=>`<div style="margin:12px 0"><b>${s}</b><div class="intensity" data-sym="${s}">${levels.map(l=>`<button class="choice ${form.symptomLevels[s]===l?'selected':''}" data-level="${l}">${l}</button>`).join('')}</div></div>`).join('');$('symptomLevels').querySelectorAll('[data-sym]').forEach(g=>g.querySelectorAll('button').forEach(b=>b.onclick=()=>{form.symptomLevels[g.dataset.sym]=b.dataset.level;drawSymptomLevels(form.symptoms)}))}
+function openDay(date){selectedDate=date;form={moods:[],symptoms:[],symptomLevels:{},pain:'',flow:'',energy:'',notes:''};let r=records[date]||{};form={...form,...r};$('dayTitle').textContent=labelDate(date);choices('moods',moods,true,form.moods);choices('symptoms',symptoms,true,form.symptoms);drawSymptomLevels(form.symptoms);choices('pain',levels,false,form.pain?[form.pain]:[]);choices('flow',['Leggero','Medio','Abbondante'],false,form.flow?[form.flow]:[]);choices('energy',['Molto bassa','Bassa','Normale','Alta','Molto alta'],false,form.energy?[form.energy]:[]);$('notes').value=form.notes||'';$('saveState').textContent=records[date]?'Salvata':'';
+$('home').classList.add('hidden');$('other').classList.add('hidden');$('daily').classList.remove('hidden');window.scrollTo(0,0)}
+function save(){form.notes=$('notes').value;records[selectedDate]={...form};localStorage.setItem(storeKey,JSON.stringify(records));$('saveState').textContent='Salvata ✓';drawCalendar()}
+$('saveBtn').onclick=save;$('todayBtn').onclick=()=>openDay(iso(now));$('back').onclick=()=>{$('daily').classList.add('hidden');$('home').classList.remove('hidden');drawCalendar();window.scrollTo(0,0)};
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{if(b.dataset.tab==='home'){$('daily').classList.add('hidden');$('other').classList.add('hidden');$('home').classList.remove('hidden')}else{$('daily').classList.add('hidden');$('home').classList.add('hidden');$('other').classList.remove('hidden');$('otherTitle').textContent=b.dataset.title}document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===b))});
+drawCalendar();
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));
 </script>
 </body></html>

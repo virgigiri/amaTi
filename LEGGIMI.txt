@@ -1,20 +1,7 @@
 amaTi – aggiornamento scheda giornaliera
 
-Questa versione aggiunge la scheda giornaliera con:
-- emozioni selezionabili
-- sintomi selezionabili e intensità individuale
-- intensità del dolore generale
-- flusso
-- energia
-- note libere
-- salvataggio locale sul dispositivo (localStorage)
+Questa versione aggiunge la scheda giornaliera con emozioni, sintomi, intensità, flusso, energia e note. I dati vengono salvati localmente nel browser tramite localStorage.
 
-Per aggiornare il sito GitHub Pages:
-1. Apri il repository amaTi su GitHub.
-2. Entra nella cartella principale (root).
-3. Carica i 5 file contenuti in questa cartella, sostituendo quelli esistenti quando richiesto.
-4. Conferma con Commit changes.
-5. Riapri il sito e aggiorna la pagina.
+Per aggiornare GitHub: carica e sostituisci i file del progetto con quelli contenuti nello ZIP, poi fai Commit changes. Attendi qualche minuto e ricarica il sito. Se Safari mostra la vecchia versione, chiudi e riapri la pagina o aggiorna.
 
-Nota: i dati della scheda restano nel browser/dispositivo e non vengono sincronizzati online.
-Questa è ancora una versione in costruzione: Diario, statistiche, registrazione dei cicli e altre funzioni saranno aggiunte in seguito.
+Nota privacy: i dati restano nel browser di questo dispositivo, ma non sono protetti da PIN/Face ID e possono andare persi cancellando i dati di Safari. Non usare questa bozza come archivio medico.

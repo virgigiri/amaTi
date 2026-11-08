@@ -1,9 +1,1 @@
-{
-  "name": "amaTi",
-  "short_name": "amaTi",
-  "start_url": "./",
-  "display": "standalone",
-  "background_color": "#fffaf2",
-  "theme_color": "#f8e9e9",
-  "icons": [{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any"}]
-}
+{"name":"amaTi","short_name":"amaTi","start_url":"./","display":"standalone","background_color":"#fffaf6","theme_color":"#fffaf6","icons":[{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}
