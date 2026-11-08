@@ -53,6 +53,31 @@ h1{font-size:22px;font-weight:600;margin:0 0 4px;color:var(--deep)}
 .placeholder{font-size:13px;line-height:1.6;color:#98777a}
 .toast{font-size:11px;color:#a77b7e;margin-top:8px}
 @media(min-width:520px){.app{border-left:1px solid #f5e9e5;border-right:1px solid #f5e9e5}}
+
+/* Scheda giornaliera */
+.form-section{margin:17px 0 0}
+.form-section h2{font-size:16px;color:var(--deep);margin:0 0 9px;font-weight:650}
+.form-section .hint{font-size:11px;color:#b28c8d;margin:-3px 0 9px}
+.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.choice{display:flex;align-items:center;gap:8px;background:#fffaf2;border:1px solid #f1dfdc;border-radius:14px;padding:10px 11px;font-size:13px;min-height:43px}
+.choice input{accent-color:#bd777f;width:17px;height:17px;flex:none}
+.choice:has(input:checked){background:#f8e9e9;border-color:#d8a6a8}
+.intensity-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.intensity-row label{font-size:10px;background:#fffaf2;border:1px solid #f1dfdc;border-radius:20px;padding:7px 9px}
+.intensity-row input{accent-color:#bd777f}
+.symptom-item{padding:9px 0;border-bottom:1px solid #f6eae7}
+.symptom-top{display:flex;align-items:center;gap:8px}
+.symptom-top label{font-size:13px;display:flex;align-items:center;gap:8px}
+.symptom-top input{accent-color:#bd777f;width:17px;height:17px}
+.field-select{width:100%;background:#fffaf2;border:1px solid #f1dfdc;border-radius:13px;padding:11px;color:var(--ink);font:inherit;font-size:13px;margin-top:8px}
+.notes{width:100%;min-height:105px;resize:vertical;background:#fffaf2;border:1px solid #f1dfdc;border-radius:15px;padding:12px;color:var(--ink);font:inherit;font-size:13px}
+.save-day{width:100%;margin-top:17px;background:#f3dada;border-radius:16px;padding:13px;color:var(--deep);font-weight:650}
+.saved-message{font-size:11px;color:#9a6a70;text-align:center;min-height:17px;margin-top:8px}
+.flow-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.flow-choice{display:flex;flex-direction:column;align-items:center;gap:5px;background:#fffaf2;border:1px solid #f1dfdc;border-radius:14px;padding:12px 4px;font-size:12px}
+.flow-choice input{accent-color:#bd777f}
+.flow-symbol{font-size:23px;color:#bd777f;line-height:1}
+
 </style>
 </head>
 <body>
@@ -91,7 +116,62 @@ h1{font-size:22px;font-weight:600;margin:0 0 4px;color:var(--deep)}
   <section id="day" class="screen">
     <button class="back" data-back aria-label="Indietro">‹</button>
     <h1 id="dayTitle">La tua giornata</h1><p class="sub">La tua scheda giornaliera</p>
-    <div class="day-panel"><p class="placeholder">Qui costruiremo la scheda completa: emozioni, sintomi, intensità, flusso, energia e note. In questa prima prova puoi verificare l'apertura dei giorni dal calendario.</p></div>
+    
+<div class="day-panel">
+  <form id="dailyForm">
+    <div class="form-section">
+      <h2>Come ti senti oggi, Virgi?</h2>
+      <p class="hint">Puoi scegliere più emozioni.</p>
+      <div class="choice-grid" id="moodChoices">
+        <label class="choice"><input type="checkbox" name="mood" value="Felice"> ☀️ Felice</label>
+        <label class="choice"><input type="checkbox" name="mood" value="Neutrale"> ♡ Neutrale</label>
+        <label class="choice"><input type="checkbox" name="mood" value="Sensibile"> 🌷 Sensibile</label>
+        <label class="choice"><input type="checkbox" name="mood" value="Stanca"> ☁️ Stanca</label>
+        <label class="choice"><input type="checkbox" name="mood" value="Tranquilla"> 🌿 Tranquilla</label>
+        <label class="choice"><input type="checkbox" name="mood" value="Arrabbiata"> ⚡ Arrabbiata</label>
+        <label class="choice"><input type="checkbox" name="mood" value="Stressata"> 💭 Stressata</label>
+        <label class="choice"><input type="checkbox" name="mood" value="Ansiosa"> 🫧 Ansiosa</label>
+      </div>
+    </div>
+    <div class="form-section">
+      <h2>Hai notato qualche sintomo?</h2>
+      <p class="hint">Seleziona quelli presenti e indica l'intensità di ciascuno.</p>
+      <div id="symptomChoices">
+        <div class="symptom-item"><div class="symptom-top"><label><input type="checkbox" name="symptom" value="Crampi"> Crampi</label></div><select class="field-select symptom-intensity" data-symptom="Crampi"><option value="">Scegli l'intensità</option><option>Molto lieve</option><option>Lieve</option><option>Medio</option><option>Forte</option><option>Molto forte</option></select></div>
+        <div class="symptom-item"><div class="symptom-top"><label><input type="checkbox" name="symptom" value="Mal di testa"> Mal di testa</label></div><select class="field-select symptom-intensity" data-symptom="Mal di testa"><option value="">Scegli l'intensità</option><option>Molto lieve</option><option>Lieve</option><option>Medio</option><option>Forte</option><option>Molto forte</option></select></div>
+        <div class="symptom-item"><div class="symptom-top"><label><input type="checkbox" name="symptom" value="Gonfiore"> Gonfiore</label></div><select class="field-select symptom-intensity" data-symptom="Gonfiore"><option value="">Scegli l'intensità</option><option>Molto lieve</option><option>Lieve</option><option>Medio</option><option>Forte</option><option>Molto forte</option></select></div>
+        <div class="symptom-item"><div class="symptom-top"><label><input type="checkbox" name="symptom" value="Stanchezza"> Stanchezza</label></div><select class="field-select symptom-intensity" data-symptom="Stanchezza"><option value="">Scegli l'intensità</option><option>Molto lieve</option><option>Lieve</option><option>Medio</option><option>Forte</option><option>Molto forte</option></select></div>
+        <div class="symptom-item"><div class="symptom-top"><label><input type="checkbox" name="symptom" value="Brufoli"> Brufoli</label></div><select class="field-select symptom-intensity" data-symptom="Brufoli"><option value="">Scegli l'intensità</option><option>Molto lieve</option><option>Lieve</option><option>Medio</option><option>Forte</option><option>Molto forte</option></select></div>
+        <div class="symptom-item"><div class="symptom-top"><label><input type="checkbox" name="symptom" value="Mal di schiena"> Mal di schiena</label></div><select class="field-select symptom-intensity" data-symptom="Mal di schiena"><option value="">Scegli l'intensità</option><option>Molto lieve</option><option>Lieve</option><option>Medio</option><option>Forte</option><option>Molto forte</option></select></div>
+        <div class="symptom-item"><div class="symptom-top"><label><input type="checkbox" name="symptom" value="Nausea"> Nausea</label></div><select class="field-select symptom-intensity" data-symptom="Nausea"><option value="">Scegli l'intensità</option><option>Molto lieve</option><option>Lieve</option><option>Medio</option><option>Forte</option><option>Molto forte</option></select></div>
+        <div class="symptom-item"><div class="symptom-top"><label><input type="checkbox" name="symptom" value="Sensibilità al seno"> Sensibilità al seno</label></div><select class="field-select symptom-intensity" data-symptom="Sensibilità al seno"><option value="">Scegli l'intensità</option><option>Molto lieve</option><option>Lieve</option><option>Medio</option><option>Forte</option><option>Molto forte</option></select></div>
+      </div>
+    </div>
+    <div class="form-section">
+      <h2>Dolore generale</h2>
+      <select class="field-select" id="generalPain"><option value="">Seleziona l'intensità (facoltativo)</option><option>Molto lieve</option><option>Lieve</option><option>Medio</option><option>Forte</option><option>Molto forte</option></select>
+    </div>
+    <div class="form-section">
+      <h2>Com'è il flusso?</h2>
+      <div class="flow-grid">
+        <label class="flow-choice"><span class="flow-symbol">♡</span><input type="radio" name="flow" value="Leggero">Leggero</label>
+        <label class="flow-choice"><span class="flow-symbol">♥</span><input type="radio" name="flow" value="Medio">Medio</label>
+        <label class="flow-choice"><span class="flow-symbol">✿</span><input type="radio" name="flow" value="Abbondante">Abbondante</label>
+      </div>
+    </div>
+    <div class="form-section">
+      <h2>La mia energia oggi</h2>
+      <select class="field-select" id="energy"><option value="">Scegli come ti senti</option><option>Molto bassa</option><option>Bassa</option><option>Normale</option><option>Alta</option><option>Molto alta</option></select>
+    </div>
+    <div class="form-section">
+      <h2>Le mie note</h2>
+      <textarea class="notes" id="notes" placeholder=""></textarea>
+    </div>
+    <button class="save-day" type="submit">Salva la giornata</button>
+    <div class="saved-message" id="savedMessage" aria-live="polite"></div>
+  </form>
+</div>
+
   </section>
   <section id="learn" class="screen">
     <button class="back" data-back aria-label="Indietro">‹</button><h1>Imparo a conoscermi</h1><p class="sub">Informazioni semplici per conoscere meglio il ciclo.</p>
@@ -145,6 +225,47 @@ document.getElementById('fullRecordPeriod').onclick=()=>{document.getElementById
 document.querySelectorAll('[data-back]').forEach(b=>b.onclick=()=>show('home'));
 document.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>show(b.dataset.open));
 document.querySelectorAll('.nav').forEach(b=>b.onclick=()=>{if(b.dataset.tab==='other'){document.getElementById('otherTitle').textContent=b.dataset.name;show('other')}else show('home')});
+
+const form=document.getElementById('dailyForm');
+const dayKey=()=>selected?`amati-day-${selected.getFullYear()}-${String(selected.getMonth()+1).padStart(2,'0')}-${String(selected.getDate()).padStart(2,'0')}`:null;
+function loadDay(){
+  form.reset();
+  const key=dayKey(), saved=key?localStorage.getItem(key):null;
+  document.getElementById('savedMessage').textContent='';
+  if(!saved)return;
+  try{
+    const data=JSON.parse(saved);
+    document.querySelectorAll('input[name="mood"]').forEach(el=>el.checked=(data.mood||[]).includes(el.value));
+    document.querySelectorAll('input[name="symptom"]').forEach(el=>el.checked=Object.prototype.hasOwnProperty.call(data.symptoms||{},el.value));
+    document.querySelectorAll('.symptom-intensity').forEach(el=>el.value=(data.symptoms||{})[el.dataset.symptom]||'');
+    document.getElementById('generalPain').value=data.generalPain||'';
+    document.querySelectorAll('input[name="flow"]').forEach(el=>el.checked=el.value===data.flow);
+    document.getElementById('energy').value=data.energy||'';
+    document.getElementById('notes').value=data.notes||'';
+  }catch(e){}
+}
+form.addEventListener('submit',e=>{
+  e.preventDefault();
+  const mood=[...document.querySelectorAll('input[name="mood"]:checked')].map(el=>el.value);
+  const symptoms={};
+  document.querySelectorAll('input[name="symptom"]:checked').forEach(el=>{
+    const intensity=document.querySelector(`.symptom-intensity[data-symptom="${el.value}"]`);
+    symptoms[el.value]=intensity?intensity.value:'';
+  });
+  const data={
+    mood,symptoms,
+    generalPain:document.getElementById('generalPain').value,
+    flow:document.querySelector('input[name="flow"]:checked')?.value||'',
+    energy:document.getElementById('energy').value,
+    notes:document.getElementById('notes').value
+  };
+  if(!selected)return;
+  localStorage.setItem(dayKey(),JSON.stringify(data));
+  document.getElementById('savedMessage').textContent='Giornata salvata su questo dispositivo ♡';
+});
+const originalShow=show;
+show=function(id){originalShow(id);if(id==='day')loadDay()};
+
 render();
 if('serviceWorker' in navigator && location.protocol!=='file:'){navigator.serviceWorker.register('./service-worker.js').catch(()=>{})}
 </script>

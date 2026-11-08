@@ -1,7 +1,20 @@
-amaTi — Home v3
+amaTi – aggiornamento scheda giornaliera
 
-Novità: dalla Home c'è il pulsante «Apri calendario completo», che apre una schermata dedicata con il mese intero, da lunedì a domenica, e frecce per cambiare mese. Toccando una data si apre la scheda del giorno.
+Questa versione aggiunge la scheda giornaliera con:
+- emozioni selezionabili
+- sintomi selezionabili e intensità individuale
+- intensità del dolore generale
+- flusso
+- energia
+- note libere
+- salvataggio locale sul dispositivo (localStorage)
 
-Nota: se apri index.html dall'anteprima dell'app File su iPhone, l'anteprima può non eseguire JavaScript e il calendario può apparire vuoto. Per provarlo correttamente, il progetto va aperto in un browser come sito HTTPS e poi aggiunto alla schermata Home.
+Per aggiornare il sito GitHub Pages:
+1. Apri il repository amaTi su GitHub.
+2. Entra nella cartella principale (root).
+3. Carica i 5 file contenuti in questa cartella, sostituendo quelli esistenti quando richiesto.
+4. Conferma con Commit changes.
+5. Riapri il sito e aggiorna la pagina.
 
-È ancora una bozza: registrazione mestruazioni, salvataggio, diario, statistiche, previsioni, notifiche, PIN/Face ID ed esportazione non sono ancora implementati.
+Nota: i dati della scheda restano nel browser/dispositivo e non vengono sincronizzati online.
+Questa è ancora una versione in costruzione: Diario, statistiche, registrazione dei cicli e altre funzioni saranno aggiunte in seguito.
