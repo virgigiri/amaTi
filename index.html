@@ -86,12 +86,52 @@ function drawCalendar(){
  document.querySelectorAll('[data-date]').forEach(b=>b.onclick=()=>openDay(b.dataset.date));
 }
 $('prev').onclick=()=>{shown.setMonth(shown.getMonth()-1);drawCalendar()};$('next').onclick=()=>{shown.setMonth(shown.getMonth()+1);drawCalendar()};
-function choices(id,items,multiple=true,values=[]){$(id).innerHTML=items.map(v=>`<button type="button" class="choice ${values.includes(v)?'selected':''}" data-value="${v}">${v}</button>`).join('');$(id).querySelectorAll('button').forEach(b=>b.onclick=()=>{let v=b.dataset.value;if(multiple){let a=values.includes(v)?values.filter(x=>x!==v):[...values,v];choices(id,items,multiple,a);if(id==='symptoms')drawSymptomLevels(a)}else{choices(id,items,false,[v]);if(id==='pain')form.pain=v;if(id==='flow')form.flow=v;if(id==='energy')form.energy=v}})}
+function choices(id,items,multiple=true,values=[]){
+ $(id).innerHTML=items.map(v=>`<button type="button" class="choice ${values.includes(v)?'selected':''}" data-value="${v}">${v}</button>`).join('');
+ $(id).querySelectorAll('button').forEach(b=>b.onclick=()=>{
+  let v=b.dataset.value;
+  if(multiple){
+   let a=values.includes(v)?values.filter(x=>x!==v):[...values,v];
+   form[id]=a;
+   if(id==='symptoms'){
+    form.symptomLevels=form.symptomLevels||{};
+    a.forEach(s=>{if(!form.symptomLevels[s])form.symptomLevels[s]=''});
+    Object.keys(form.symptomLevels).forEach(s=>{if(!a.includes(s))delete form.symptomLevels[s]});
+   }
+   choices(id,items,multiple,a);
+   if(id==='symptoms')drawSymptomLevels(a);
+  }else{
+   choices(id,items,false,[v]);
+   if(id==='pain')form.pain=v;
+   if(id==='flow')form.flow=v;
+   if(id==='energy')form.energy=v;
+  }
+ });
+}
 let form={moods:[],symptoms:[],symptomLevels:{},pain:'',flow:'',energy:'',notes:''};
-function drawSymptomLevels(selected){$('symptomLevels').innerHTML=selected.map(s=>`<div style="margin:12px 0"><b>${s}</b><div class="intensity" data-sym="${s}">${levels.map(l=>`<button class="choice ${form.symptomLevels[s]===l?'selected':''}" data-level="${l}">${l}</button>`).join('')}</div></div>`).join('');$('symptomLevels').querySelectorAll('[data-sym]').forEach(g=>g.querySelectorAll('button').forEach(b=>b.onclick=()=>{form.symptomLevels[g.dataset.sym]=b.dataset.level;drawSymptomLevels(form.symptoms)}))}
-function openDay(date){selectedDate=date;form={moods:[],symptoms:[],symptomLevels:{},pain:'',flow:'',energy:'',notes:''};let r=records[date]||{};form={...form,...r};$('dayTitle').textContent=labelDate(date);choices('moods',moods,true,form.moods);choices('symptoms',symptoms,true,form.symptoms);drawSymptomLevels(form.symptoms);choices('pain',levels,false,form.pain?[form.pain]:[]);choices('flow',['Leggero','Medio','Abbondante'],false,form.flow?[form.flow]:[]);choices('energy',['Molto bassa','Bassa','Normale','Alta','Molto alta'],false,form.energy?[form.energy]:[]);$('notes').value=form.notes||'';$('saveState').textContent=records[date]?'Salvata':'';
-$('home').classList.add('hidden');$('other').classList.add('hidden');$('daily').classList.remove('hidden');window.scrollTo(0,0)}
-function save(){form.notes=$('notes').value;records[selectedDate]={...form};localStorage.setItem(storeKey,JSON.stringify(records));$('saveState').textContent='Salvata ✓';drawCalendar()}
+function drawSymptomLevels(selected){
+ $('symptomLevels').innerHTML=selected.map(s=>`<div style="margin:12px 0"><b>${s}</b><div class="intensity" data-sym="${s}">${levels.map(l=>`<button type="button" class="choice ${form.symptomLevels[s]===l?'selected':''}" data-level="${l}">${l}</button>`).join('')}</div></div>`).join('');
+ $('symptomLevels').querySelectorAll('[data-sym]').forEach(g=>g.querySelectorAll('button').forEach(b=>b.onclick=()=>{form.symptomLevels[g.dataset.sym]=b.dataset.level;drawSymptomLevels(form.symptoms)}));
+}
+function openDay(date){
+ selectedDate=date;form={moods:[],symptoms:[],symptomLevels:{},pain:'',flow:'',energy:'',notes:''};
+ let r=records[date]||{};form={...form,...r};
+ $('dayTitle').textContent=labelDate(date);
+ choices('moods',moods,true,form.moods||[]);
+ choices('symptoms',symptoms,true,form.symptoms||[]);
+ drawSymptomLevels(form.symptoms||[]);
+ choices('pain',levels,false,form.pain?[form.pain]:[]);
+ choices('flow',['Leggero','Medio','Abbondante'],false,form.flow?[form.flow]:[]);
+ choices('energy',['Molto bassa','Bassa','Normale','Alta','Molto alta'],false,form.energy?[form.energy]:[]);
+ $('notes').value=form.notes||'';$('saveState').textContent=records[date]?'Salvata':'';
+ $('home').classList.add('hidden');$('other').classList.add('hidden');$('daily').classList.remove('hidden');window.scrollTo(0,0);
+}
+function save(){
+ form.notes=$('notes').value;
+ records[selectedDate]={...form};
+ localStorage.setItem(storeKey,JSON.stringify(records));
+ $('saveState').textContent='Salvata ✓';drawCalendar();
+}
 $('saveBtn').onclick=save;$('todayBtn').onclick=()=>openDay(iso(now));$('back').onclick=()=>{$('daily').classList.add('hidden');$('home').classList.remove('hidden');drawCalendar();window.scrollTo(0,0)};
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{if(b.dataset.tab==='home'){$('daily').classList.add('hidden');$('other').classList.add('hidden');$('home').classList.remove('hidden')}else{$('daily').classList.add('hidden');$('home').classList.add('hidden');$('other').classList.remove('hidden');$('otherTitle').textContent=b.dataset.title}document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===b))});
 drawCalendar();
